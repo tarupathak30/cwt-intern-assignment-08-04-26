@@ -1,0 +1,5 @@
+groq
+apify-client
+requests
+python-dotenv
+rich
