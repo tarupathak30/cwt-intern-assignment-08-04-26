@@ -23,6 +23,23 @@ core/
 
 ---
 
+## Architecture Decision — Why Not MiroShark or Hermes?
+
+The task suggested MiroShark and Hermes-Agent as potential frameworks. After reviewing 
+both, I made a deliberate decision to build a custom lightweight architecture instead. 
+MiroShark is a powerful swarm simulation engine but requires Neo4j, Docker, and Node.js 
+18+ just to boot — significant infrastructure overhead for what is fundamentally a backend 
+Python research tool. Hermes-Agent is similarly experimental with limited documentation. 
+Rather than spending time wrestling with infrastructure dependencies, I implemented the 
+same multi-agent flow natively in Python: each agent is a focused module with a single 
+responsibility, they communicate through a shared SQLite store, and the LLM layer is 
+cleanly abstracted so any OpenAI-compatible provider (Groq, OpenRouter, local Ollama) 
+can be swapped in via one env variable. The result is a project that runs with 
+`pip install -r requirements.txt` and `python main.py` — no Docker, no graph database, 
+no Node.js — while delivering all five agents, APIFY RAG enrichment, and a closed 
+learning loop as specified.
+
+
 ## Setup
 
 ### 1. Install dependencies
@@ -32,7 +49,6 @@ pip install -r requirements.txt
 
 ### 2. Configure API keys
 ```bash
-cp .env.example .env
 # Edit .env and fill in:
 # GROQ_API_KEY=   → https://console.groq.com (free)
 # APIFY_API_TOKEN= → https://console.apify.com (free tier)

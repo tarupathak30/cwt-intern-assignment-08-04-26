@@ -3,3 +3,5 @@ apify-client
 requests
 python-dotenv
 rich
+apify-client 
+beautifulsoup4
